@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MindPulse AI — Mental Health Score Prediction</title>
+  <meta name="description" content="An educational machine learning demo that predicts a mental health score from lifestyle and social media habits." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <a class="skip-link" href="#predict">Skip to assessment</a>
+ 
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="top">
+    <div class="container nav__inner">
+      <a class="brand" href="#overview" aria-label="MindPulse AI home">
+        <svg class="brand__logo" viewBox="0 0 32 32" aria-hidden="true">
+          <defs>
+            <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="#14b8a6" />
+              <stop offset="1" stop-color="#3b82f6" />
+            </linearGradient>
+          </defs>
+          <rect width="32" height="32" rx="9" fill="url(#lg)" />
+          <path d="M5 17h5l2.5-6 4 11 3-8 1.5 3H27" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>MindPulse <b>AI</b></span>
+      </a>
+ 
+      <nav class="nav__links" id="navLinks" aria-label="Primary">
+        <a href="#overview">Overview</a>
+        <a href="#predict">Predict</a>
+        <a href="#how">How It Works</a>
+        <a href="#about">About</a>
+      </nav>
+ 
+      <div class="nav__actions">
+        <button class="icon-btn" id="themeToggle" type="button" aria-label="Switch to dark mode">
+          <svg class="i-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" /></svg>
+          <svg class="i-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" /></svg>
+        </button>
+        <a class="btn btn--primary btn--sm nav__cta" href="#predict">Start Assessment</a>
+        <button class="icon-btn nav__burger" id="menuToggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" /></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+ 
+  <main>
+    <!-- ============ HERO ============ -->
+    <section class="hero" id="overview">
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__copy reveal">
+          <span class="pill"><span class="pill__dot"></span> Educational ML demonstration</span>
+          <h1>Understand Your Mental Wellbeing <span class="grad">Through Data.</span></h1>
+          <p class="lead">Explore how daily habits, sleep, physical activity, study patterns, and social media usage relate to your predicted mental health score.</p>
+          <div class="hero__btns">
+            <a class="btn btn--primary btn--lg" href="#predict">Start Assessment
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" /></svg>
+            </a>
+            <a class="btn btn--ghost btn--lg" href="#how">How It Works</a>
+          </div>
+          <p class="hero__note">This tool does not diagnose any mental health condition.</p>
+        </div>
+ 
+        <div class="hero__visual reveal" aria-hidden="true">
+          <svg class="orb" viewBox="0 0 420 420">
+            <defs>
+              <radialGradient id="orbG" cx="50%" cy="45%" r="60%">
+                <stop offset="0" stop-color="#5eead4" stop-opacity=".55" />
+                <stop offset="1" stop-color="#3b82f6" stop-opacity=".05" />
+              </radialGradient>
+              <linearGradient id="lineG" x1="0" x2="1">
+                <stop offset="0" stop-color="#14b8a6" />
+                <stop offset="1" stop-color="#3b82f6" />
+              </linearGradient>
+            </defs>
+            <circle cx="210" cy="210" r="190" fill="url(#orbG)" />
+            <circle class="ring ring--1" cx="210" cy="210" r="150" />
+            <circle class="ring ring--2" cx="210" cy="210" r="115" />
+            <circle class="ring ring--3" cx="210" cy="210" r="80" />
+            <!-- stylised brain: two lobes with neural paths -->
+            <g class="brain" fill="none" stroke="url(#lineG)" stroke-width="3" stroke-linecap="round">
+              <path d="M205 140c-22-18-58-6-62 24-22 4-34 30-18 50-8 22 10 44 32 40 8 16 30 20 48 8z" />
+              <path d="M215 140c22-18 58-6 62 24 22 4 34 30 18 50 8 22-10 44-32 40-8 16-30 20-48 8z" />
+              <path d="M210 140v122" />
+              <path d="M165 185c14 2 22 10 24 22M255 185c-14 2-22 10-24 22M170 230c12-2 22 4 28 14M250 230c-12-2-22 4-28 14" />
+            </g>
+            <path class="pulse-line" d="M30 330h90l22-40 30 78 28-110 26 72 18-28h146" fill="none" stroke="url(#lineG)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" />
+            <circle class="node n1" cx="143" cy="164" r="5" />
+            <circle class="node n2" cx="277" cy="164" r="5" />
+            <circle class="node n3" cx="210" cy="262" r="5" />
+          </svg>
+ 
+          <div class="float-card float-card--a">
+            <span class="float-card__label">Sleep</span>
+            <strong>7.0 h</strong>
+            <span class="float-card__tag">Illustrative</span>
+          </div>
+          <div class="float-card float-card--b">
+            <span class="float-card__label">Screen time</span>
+            <strong>4.0 h</strong>
+            <span class="float-card__tag">Illustrative</span>
+          </div>
+          <div class="float-card float-card--c">
+            <span class="float-card__label">Activity</span>
+            <strong>1.0 h</strong>
+            <span class="float-card__tag">Illustrative</span>
+          </div>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ============ FEATURES ============ -->
+    <section class="section" id="features">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>What the app offers</h2>
+          <p>A focused demo of a trained regression model, wrapped in a clear and careful interface.</p>
+        </div>
+        <div class="cards">
+          <article class="card reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h4l3-8 4 16 3-8h4" /></svg></div>
+            <h3>Lifestyle insights</h3>
+            <p>Combine study, activity, sleep and stress inputs into a single model-based estimate.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2" /><path d="M11 18h2" /></svg></div>
+            <h3>Digital habit analysis</h3>
+            <p>Platform, purpose of use, daily hours and phone unlocks are part of the model input.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 14a8 8 0 1 1-9-11 6 6 0 0 0 9 11z" /></svg></div>
+            <h3>Sleep &amp; physical activity</h3>
+            <p>Enter nightly sleep and daily activity hours as numeric inputs to the model.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="6" width="12" height="12" rx="2" /><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" /></svg></div>
+            <h3>Machine learning prediction</h3>
+            <p>A pre-trained model served by FastAPI returns a predicted score for your inputs.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 12V3M12 12l6 4" /></svg></div>
+            <h3>Interactive results</h3>
+            <p>See an animated score gauge, review your inputs, print or download the result.</p>
+          </article>
+          <article class="card reveal">
+            <div class="card__icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2" /><path d="M8 11V7a4 4 0 0 1 8 0v4" /></svg></div>
+            <h3>Privacy-conscious design</h3>
+            <p>Responses are sent only to your API and are not saved in the browser or sent to analytics.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ============ ASSESSMENT ============ -->
+    <section class="section section--tint" id="predict">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>Take the assessment</h2>
+          <p>Three short steps and a review. Fields marked <span class="req" aria-hidden="true">*</span> are required.</p>
+        </div>
+ 
+        <div class="assess reveal">
+          <!-- Progress -->
+          <ol class="stepper" id="stepper" aria-label="Assessment progress">
+            <li class="stepper__item is-active" data-step="1"><span class="stepper__num">1</span><span class="stepper__label">Personal</span></li>
+            <li class="stepper__item" data-step="2"><span class="stepper__num">2</span><span class="stepper__label">Digital habits</span></li>
+            <li class="stepper__item" data-step="3"><span class="stepper__num">3</span><span class="stepper__label">Lifestyle</span></li>
+            <li class="stepper__item" data-step="4"><span class="stepper__num">4</span><span class="stepper__label">Review</span></li>
+          </ol>
+          <div class="bar" aria-hidden="true"><div class="bar__fill" id="barFill"></div></div>
+ 
+          <!-- Global error banner -->
+          <div class="alert alert--error" id="apiError" role="alert" hidden>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9" /><path d="M12 8v5M12 16.5v.5" /></svg>
+            <div>
+              <strong id="apiErrorTitle">Something went wrong</strong>
+              <p id="apiErrorMsg"></p>
+            </div>
+          </div>
+ 
+          <form id="assessForm" novalidate>
+            <!-- STEP 1 -->
+            <fieldset class="step is-active" data-step="1">
+              <legend>Personal information</legend>
+              <div class="grid2">
+                <div class="field">
+                  <label for="age">Age <span class="req" aria-hidden="true">*</span></label>
+                  <input id="age" name="age" type="number" inputmode="numeric" min="10" max="100" step="1" required aria-describedby="age-hint age-err" />
+                  <small id="age-hint" class="hint">Whole number, 10–100.</small>
+                  <small id="age-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="gender">Gender <span class="req" aria-hidden="true">*</span></label>
+                  <select id="gender" name="gender" required aria-describedby="gender-err">
+                    <option value="">Select…</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+                  <small id="gender-hint" class="hint">The model was trained with these two options.</small>
+                  <small id="gender-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="country">Country <span class="req" aria-hidden="true">*</span></label>
+                  <input id="country" name="country" type="text" list="countryList" autocomplete="country-name" required aria-describedby="country-hint country-err" />
+                  <datalist id="countryList"></datalist>
+                  <small id="country-hint" class="hint">Start typing to search, or enter your own.</small>
+                  <small id="country-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="academic_level">Academic level <span class="req" aria-hidden="true">*</span></label>
+                  <select id="academic_level" name="academic_level" required aria-describedby="academic_level-err">
+                    <option value="">Select…</option>
+                    <option>Undergraduate</option>
+                    <option>Graduate</option>
+                    <option>High School</option>
+                  </select>
+                  <small id="academic_level-err" class="err" role="alert"></small>
+                </div>
+              </div>
+            </fieldset>
+ 
+            <!-- STEP 2 -->
+            <fieldset class="step" data-step="2">
+              <legend>Digital habits</legend>
+              <div class="grid2">
+                <div class="field">
+                  <label for="most_used_platform">Most-used platform <span class="req" aria-hidden="true">*</span></label>
+                  <select id="most_used_platform" name="most_used_platform" required aria-describedby="most_used_platform-err">
+                    <option value="">Select…</option>
+                    <option>Facebook</option><option>LinkedIn</option><option>Instagram</option>
+                    <option>Snapchat</option><option>Twitter</option><option>YouTube</option>
+                    <option>TikTok</option><option>LINE</option><option>KakaoTalk</option>
+                    <option>VKontakte</option><option>WhatsApp</option><option>WeChat</option>
+                  </select>
+                  <small id="most_used_platform-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="purpose_of_use">Purpose of use <span class="req" aria-hidden="true">*</span></label>
+                  <select id="purpose_of_use" name="purpose_of_use" required aria-describedby="purpose_of_use-err">
+                    <option value="">Select…</option>
+                    <option>Networking</option><option>Education</option>
+                    <option>Entertainment</option><option>News</option>
+                  </select>
+                  <small id="purpose_of_use-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="avg_daily_usage_hours">Average daily usage (hours) <span class="req" aria-hidden="true">*</span></label>
+                  <input id="avg_daily_usage_hours" name="avg_daily_usage_hours" type="number" inputmode="decimal" min="0" max="24" step="0.1" required aria-describedby="avg_daily_usage_hours-hint avg_daily_usage_hours-err" />
+                  <small id="avg_daily_usage_hours-hint" class="hint">Hours per day on social media, 0–24.</small>
+                  <small id="avg_daily_usage_hours-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="daily_unlocks">Daily phone unlocks <span class="req" aria-hidden="true">*</span></label>
+                  <input id="daily_unlocks" name="daily_unlocks" type="number" inputmode="numeric" min="0" step="1" required aria-describedby="daily_unlocks-hint daily_unlocks-err" />
+                  <small id="daily_unlocks-hint" class="hint">Approximate number of times you unlock your phone per day.</small>
+                  <small id="daily_unlocks-err" class="err" role="alert"></small>
+                </div>
+              </div>
+            </fieldset>
+ 
+            <!-- STEP 3 -->
+            <fieldset class="step" data-step="3">
+              <legend>Lifestyle and wellbeing</legend>
+              <div class="grid2">
+                <div class="field">
+                  <label for="study_hours">Study hours per day <span class="req" aria-hidden="true">*</span></label>
+                  <input id="study_hours" name="study_hours" type="number" inputmode="decimal" min="0" max="24" step="0.1" required aria-describedby="study_hours-hint study_hours-err" />
+                  <small id="study_hours-hint" class="hint">0–24 hours.</small>
+                  <small id="study_hours-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="physical_activity_hours">Physical activity (hours per day) <span class="req" aria-hidden="true">*</span></label>
+                  <input id="physical_activity_hours" name="physical_activity_hours" type="number" inputmode="decimal" min="0" max="24" step="0.1" required aria-describedby="physical_activity_hours-hint physical_activity_hours-err" />
+                  <small id="physical_activity_hours-hint" class="hint">0–24 hours.</small>
+                  <small id="physical_activity_hours-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="sleep_hours_per_night">Sleep (hours per night) <span class="req" aria-hidden="true">*</span></label>
+                  <input id="sleep_hours_per_night" name="sleep_hours_per_night" type="number" inputmode="decimal" min="0" max="24" step="0.1" required aria-describedby="sleep_hours_per_night-hint sleep_hours_per_night-err" />
+                  <small id="sleep_hours_per_night-hint" class="hint">0–24 hours.</small>
+                  <small id="sleep_hours_per_night-err" class="err" role="alert"></small>
+                </div>
+                <div class="field">
+                  <label for="stress_level">Stress level <span class="req" aria-hidden="true">*</span></label>
+                  <select id="stress_level" name="stress_level" required aria-describedby="stress_level-err">
+                    <option value="">Select…</option>
+                    <option>Low</option><option>Medium</option>
+                    <option>High</option><option>Very High</option>
+                  </select>
+                  <small id="stress_level-err" class="err" role="alert"></small>
+                </div>
+              </div>
+            </fieldset>
+ 
+            <!-- STEP 4: REVIEW -->
+            <fieldset class="step" data-step="4">
+              <legend>Review your answers</legend>
+              <p class="hint hint--block">Check everything below. Use Back to change an answer.</p>
+              <dl class="review" id="reviewList"></dl>
+              <p class="disclaimer-inline">By submitting, your answers are sent to the prediction API at the configured URL. They are not stored in this browser.</p>
+            </fieldset>
+ 
+            <div class="form__nav">
+              <button type="button" class="btn btn--ghost" id="backBtn" hidden>Back</button>
+              <span class="spacer"></span>
+              <button type="button" class="btn btn--primary" id="nextBtn">Continue</button>
+              <button type="submit" class="btn btn--primary" id="submitBtn" hidden>
+                <span class="spinner" aria-hidden="true"></span>
+                <span class="btn__text">Submit Assessment</span>
+              </button>
+            </div>
+          </form>
+        </div>
+ 
+        <!-- ============ RESULTS ============ -->
+        <div class="results" id="results" hidden aria-live="polite" tabindex="-1">
+          <div class="results__top">
+            <div class="gauge-wrap">
+              <svg class="gauge" viewBox="0 0 200 200" role="img" aria-labelledby="gaugeTitle">
+                <title id="gaugeTitle">Radial gauge of the predicted score</title>
+                <defs>
+                  <linearGradient id="gaugeG" x1="0" y1="0" x2="1" y2="1">
+                    <stop offset="0" stop-color="#14b8a6" />
+                    <stop offset="1" stop-color="#3b82f6" />
+                  </linearGradient>
+                </defs>
+                <circle class="gauge__track" cx="100" cy="100" r="86" />
+                <circle class="gauge__value" id="gaugeValue" cx="100" cy="100" r="86" />
+              </svg>
+              <div class="gauge__center">
+                <span class="gauge__score" id="scoreNumber">—</span>
+                <span class="gauge__caption">Predicted score</span>
+              </div>
+            </div>
+ 
+            <div class="results__text">
+              <span class="pill">Model output</span>
+              <h2>Your predicted mental health score</h2>
+              <p>This number is a <strong>prediction from a machine learning model</strong>, not a clinical diagnosis. What the score means depends on how the original dataset defined and measured it, so no categories or health conclusions are drawn here.</p>
+              <p class="small muted" id="gaugeNote"></p>
+              <div class="results__btns">
+                <button class="btn btn--primary" id="newBtn" type="button">New Assessment</button>
+                <button class="btn btn--ghost" id="printBtn" type="button">Print Results</button>
+                <button class="btn btn--ghost" id="downloadJsonBtn" type="button">Download JSON</button>
+                <button class="btn btn--ghost" id="downloadTxtBtn" type="button">Download Text</button>
+              </div>
+            </div>
+          </div>
+ 
+          <div class="results__inputs">
+            <h3>Submitted inputs</h3>
+            <dl class="review" id="resultInputs"></dl>
+          </div>
+          <p class="disclaimer-inline">Educational tool only. If you are worried about your mental health, please talk to a qualified professional.</p>
+        </div>
+      </div>
+    </section>
+ 
+    <!-- ============ HOW IT WORKS ============ -->
+    <section class="section" id="how">
+      <div class="container">
+        <div class="section__head reveal">
+          <h2>How it works</h2>
+          <p>Three simple steps from input to prediction.</p>
+        </div>
+        <ol class="how">
+          <li class="how__item reveal"><span class="how__num">1</span><h3>Enter your information</h3><p>Provide lifestyle and social media usage details in a short guided form.</p></li>
+          <li class="how__item reveal"><span class="how__num">2</span><h3>The model processes it</h3><p>Your inputs are sent to a FastAPI service running a trained machine learning model.</p></li>
+          <li class="how__item reveal"><span class="how__num">3</span><h3>View the predicted score</h3><p>See the model's predicted score, alongside a summary of what you submitted.</p></li>
+        </ol>
+      </div>
+    </section>
+ 
+    <!-- ============ ABOUT ============ -->
+    <section class="section section--tint" id="about">
+      <div class="container about reveal">
+        <h2>About the project</h2>
+        <p>MindPulse AI is a machine learning demonstration project exploring patterns in student social media usage and mental health-related scores. The prediction comes from a regression model trained on a student dataset and served through a FastAPI backend.</p>
+        <p>It has not been clinically validated or approved for medical use. Treat results as an educational illustration of how a model responds to inputs, not as guidance about your health.</p>
+      </div>
+    </section>
+  </main>
+ 
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <div>
+        <strong>MindPulse AI</strong>
+        <p class="small muted">Mental Health Score Prediction — educational ML project.</p>
+      </div>
+      <div>
+        <strong>Stack</strong>
+        <p class="small muted">HTML · CSS · JavaScript · FastAPI · trained ML model (.pkl)</p>
+      </div>
+      <div>
+        <strong>Links</strong>
+        <p class="small"><a id="docsLink" href="http://127.0.0.1:8000/docs" target="_blank" rel="noopener">API documentation</a></p>
+      </div>
+    </div>
+    <div class="container footer__legal">
+      <p class="small muted"><strong>Disclaimer:</strong> This tool provides a model prediction for educational purposes only. It is not a medical device, diagnosis, or substitute for professional assessment.</p>
+      <p class="small muted">© <span id="year"></span> MindPulse AI. All rights reserved.</p>
+    </div>
+  </footer>
+ 
+  <script src="sceipt.js"></script>
+</body>
+</html>
